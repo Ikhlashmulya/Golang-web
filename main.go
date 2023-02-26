@@ -15,6 +15,9 @@ func main() {
     mux.HandleFunc("/form", controllers.Form)
     mux.HandleFunc("/message", controllers.Message)
     
+    fileServer := http.FileServer(http.Dir("assets"))
+    mux.Handle("/static/", http.StripPrefix("/static", fileServer))
+    
     server := http.Server{
         Addr: "localhost:8080", 
         Handler: mux, 
